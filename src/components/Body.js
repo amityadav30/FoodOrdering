@@ -1,14 +1,17 @@
 import RestaurantCard from "./RestaurantCard";
 import { restaurantList } from "../constants";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Shimmer from "./Shimmer";
 import shimmerImg from "../assets/img/shimmer.png";
 import { Link } from "react-router-dom";
 import { filterRestaurants } from "./utils/helper";
 import useAllRestaurant from "./utils/useAllRestaurant";
 import useOnline from "./utils/useOnline";
+import UserContext from "./UserContext";
 
 const Body = () => {
+  const { user, setUser } = useContext(UserContext);
+
   let search = "I DONT KNOW";
   const inputRef = useRef();
   const restData = useAllRestaurant();
@@ -21,11 +24,11 @@ const Body = () => {
   //console.log("ONLINE>>>>>>>>>>  ", online);
 
   useEffect(() => {
-    console.log("IN useEFFECT");
+    // console.log("IN useEFFECT");
     setRestaurants(restData);
     //setFilteredRest(restData);
   }, [restData]);
-  console.log("RESTAURANTS ", restaurants);
+  // console.log("RESTAURANTS ", restaurants);
   if (!online) {
     return <h1>You're Offline!!!!!!!!!</h1>;
   }
@@ -34,19 +37,18 @@ const Body = () => {
 
   // setRestaurants(useAllRestaurant()); //Initially assigning both with all the data fetched and
   // setFilteredRest(useAllRestaurant()); //....using only filteredlist to display  i.e Change in only filter list not in all restaurant list
-  return restaurants.length === 0 ? (
+  return restaurants?.length === 0 ? (
     <>
       <Shimmer />
-      <img style={{ width: "100%", height: "auto" }} src={shimmerImg} />
     </>
   ) : (
     <div className="p-3">
-      <h1>{searchText}</h1>
-      <div className="">
+      <div className="mx-9">
         <input
-          className="border hover:border-2 hover:border-black-600 border-stone-700"
-          ref={inputRef}
           type="text"
+          placeholder="Search for Restaurant"
+          className="border pl-5 w-96 hover:border-2 hover:border-black-600 rounded bg-gray-50 "
+          ref={inputRef}
           onChange={(e) => {
             //search = e.target.value;
             //setSearchText(e.target.value);
@@ -56,8 +58,11 @@ const Body = () => {
           className="bg-gray-600 text-white m-3 p-2 rounded-lg h-7 inline-flex hover:bg-black items-center"
           onClick={() => {
             setSearchText(inputRef.current.value);
-            console.log("In button ", inputRef.current.value);
-            const data = filterRestaurants(restaurants, inputRef.current.value); // Get list of filtered Restaurants in data
+            // console.log("In button ", inputRef?.current?.value);
+            const data = filterRestaurants(
+              restaurants,
+              inputRef?.current?.value
+            ); // Get list of filtered Restaurants in data
             setFilteredRest(data); //Updating filtered Restaurants
             //fetchData();
           }}
@@ -65,13 +70,15 @@ const Body = () => {
           Search
         </button>
       </div>
-      <div className="flex flex-wrap ">
-        {searchText && filteredRest.length == 0 && <h1>No Restaurant Found</h1>}
+      <div className="flex flex-wrap gap-5 justify-center ">
+        {searchText && filteredRest?.length == 0 && (
+          <h1>No Restaurant Found</h1>
+        )}
 
-        {(inputRef.current ? filteredRest : restaurants).map((restaurant) => {
+        {(inputRef.current ? filteredRest : restaurants)?.map((restaurant) => {
           return (
-            <Link to={"/restaurant/" + restaurant.data.data.id}>
-              <RestaurantCard {...restaurant.data.data} />
+            <Link to={"/restaurant/" + restaurant?.info?.id}>
+              <RestaurantCard {...restaurant?.info} />
             </Link>
           );
         })}

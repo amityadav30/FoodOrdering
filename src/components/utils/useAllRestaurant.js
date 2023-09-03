@@ -12,8 +12,16 @@ const useAllRestaurant = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5204303&lng=73.8567437&offset=15&sortBy=RELEVANCE&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING"
     );
     const json = await fetchD.json();
-    const data = json.data.cards;
-    setRestaurant(data); //Initially assigning both with all the data fetched and
+    const data = json?.data?.cards?.find(
+      (item) =>
+        item?.card?.card?.gridElements?.infoWithStyle?.restaurants != undefined
+    );
+    const restaurant =
+      data?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+    const restaurantList = restaurant || [];
+
+    console.log("DATAAA ", restaurantList);
+    setRestaurant(restaurantList); //Initially assigning both with all the data fetched and
   };
 
   return restaurant;

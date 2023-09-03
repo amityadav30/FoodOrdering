@@ -4,9 +4,7 @@ export const filterRestaurants = (restaurants, searchText) => {
   console.log("SearchText ", searchText);
   //console.log("FILL ", restaurant.data.data);
   const filteredItems = restaurants?.filter((item) => {
-    return item?.data?.data?.name
-      ?.toLowerCase()
-      .includes(searchText.toLowerCase());
+    return item?.info?.name?.toLowerCase().includes(searchText.toLowerCase());
   });
   return filteredItems;
 };
