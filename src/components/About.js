@@ -20,8 +20,9 @@ const About = () => {
           </div>
           <div className="">
             <p className="text-base text-bio pt-5 mt-0 mb-4">
-              Front-End Developer who is passionate about developing end-to-end
-              web solutions with creativity and technical excellence.
+              Dedicated Software Developer with prior industry experience in
+              leading French IT MNC, driven by a passion for problem-solving and
+              creating elegant, efficient solutions in the world of technology
             </p>
             {/* <Social /> */}
           </div>
