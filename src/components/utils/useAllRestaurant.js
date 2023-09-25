@@ -27,7 +27,8 @@ const useAllRestaurant = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        "http://food-ordering-server-amityadav30.vercel.app/api/all-restaurants"
+        //"http://localhost:3000/api/all-restaurants"
+        "https://food-ordering-server-lovg.vercel.app/api/all-restaurants"
       ); // Update this route
       const data = await response.json();
       console.log("WWWWW", data);

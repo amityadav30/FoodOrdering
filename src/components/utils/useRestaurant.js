@@ -21,7 +21,8 @@ const useRestaurant = (resId) => {
   async function getRestaurantInfo(resId) {
     try {
       const response = await fetch(
-        `http://food-ordering-server-amityadav30.vercel.app/api/restaurant-menu/${resId}`
+        //"http://localhost:3000/api/restaurant-menu/${resId}"
+        `https://food-ordering-server-lovg.vercel.app/api/restaurant-menu/${resId}`
       ); // Update this route
       const data = await response.json();
       setRestaurant(data);
